@@ -1,0 +1,7 @@
+<?php
+/**
+ * Constants defined here outside of class because class constants can't be
+ * the result of any operation (concatenation)
+ */
+define('BETASERIES_URL', 'http://api.betaseries.com');
+define('BETASERIES_API_KEY', '');
