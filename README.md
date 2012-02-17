@@ -7,7 +7,7 @@ Current implemented methods
 ---------------------------
 
 * searchShows(title) : search a show by title and return his url (slug)
-* showSubtitle(url, season, episode) : search subtitles by show url and filter by season, episode
+* showSubtitles(url, season, episode) : search subtitles by show url and filter by season, episode
 
 Status
 ------
