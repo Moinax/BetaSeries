@@ -11,4 +11,6 @@ $url = $shows->shows->show->url;
 
 $episodes = simplexml_load_string($bs->getEpisodes($url));
 
-print_r($episodes);
+foreach($episodes->seasons->season->episodes as $episode) {
+    var_dump($episode);
+}
