@@ -48,6 +48,13 @@ class Client
     protected $language;
 
     /**
+     * Token used when user connection is needed
+     *
+     * @var string
+     */
+    protected $token;
+
+    /**
      * Constructor
      *
      * @param string $baseUrl Url of the Api
@@ -64,27 +71,180 @@ class Client
     }
 
     /**
-     * Search shows by title
+     * Get the status of the api
+     *
+     * @link http://api.betaseries.com/status.xml
+     * @return string
+     */
+    public function getStatus() {
+        return $this->fetch('status');
+    }
+    /**
+     * Search serie by title
      *
      * @link http://api.betaseries.com/shows/search.xml?title=<search>
      * @param string $title
      * @return string
      */
-    public function searchShows($title)
+    public function search($title)
     {
         return $this->fetch('/shows/search', array('title' => $title));
     }
 
     /**
-     * Get subtitles for a show
-     *
-     * @link http://api.betaseries.com/subtitles/show/<url>.xml<?language=(VO|VF)><&season=N><&episode=N>
-     * @param string $url
+     * Get all series at once
+     * @link http://api.betaseries.com/shows/display/all.xml
      * @return string
      */
-    public function showSubtitles($url, $season = null, $episode = null)
+    public function getSeries()
     {
-        return $this->fetch('/subtitles/show/' . $url, array('season' => $season, 'episode' => $episode, 'language' => $this->language));
+        return $this->fetch('/shows/display/all');
+    }
+
+    /**
+     * Get a serie by is slug
+     *
+     * @link http://api.betaseries.com/shows/display/<url>.xml
+     * @param string $slug
+     * @return string
+     */
+    public function getSerie($slug)
+    {
+        return $this->fetch('/shows/display/' .$slug);
+    }
+
+    /**
+     * Get all episode for a serie
+     *
+     * @link http://api.betaseries.com/shows/episodes/<url>.xml<?season=N><&episode=N><&summary=1>
+     * @param string $slug
+     * @return string
+     */
+    public function getEpisodes($slug)
+    {
+        return $this->fetch('/shows/episodes/' . $slug);
+    }
+
+    /**
+     * Get all episode for a serie and a specific season
+     *
+     * @link http://api.betaseries.com/shows/episodes/<url>.xml<?season=N><&episode=N><&summary=1>
+     * @param string $slug
+     * @param int $season
+     * @return string
+     */
+    public function getEpisodesBySeason($slug, $season)
+    {
+        return $this->fetch('/shows/episodes/' . $slug, array('season' => $season));
+    }
+
+    /**
+     * Get a specific episode for serie by season and number
+     *
+     * @link http://api.betaseries.com/shows/episodes/<url>.xml<?season=N><&episode=N><&summary=1>
+     * @param string $slug
+     * @param int $season
+     * @param int $number
+     * @return string
+     */
+    public function getEpisode($slug, $season, $number)
+    {
+        return $this->fetch('/shows/episodes/' . $slug, array('season' => $season, 'episode' => $number));
+    }
+
+    /**
+     * Set a token when we need to work with a specific user
+     *
+     * @param string $token
+     */
+    public function setToken($token) {
+        $this->token = $token;
+    }
+
+    /**
+     * Get a token for a particular user
+     *
+     * @link http://api.betaseries.com/members/auth.xml?login=<login>&password=<md5>
+     * @param string $login
+     * @param string $password
+     * @return string
+     */
+    public function getToken($login, $password)
+    {
+        $this->token = $this->fetch('/members/auth', array('login' => $login, 'password' => md5($password)));
+    }
+
+    /**
+     * Check if the token is still valid
+     *
+     * @link http://api.betaseries.com/members/is_active.xml
+     * @param string $token
+     * @return string
+     */
+    public function isValid($token)
+    {
+        return $this->fetch('/members/is_active', array('token' => $token));
+    }
+
+    /**
+     * Destroy a specific token
+     *
+     * @link http://api.betaseries.com/members/destroy.xml
+     * @param string $token
+     * @return string
+     */
+    public function destroy($token) {
+        return $this->fetch('/members/destroy', array('token' => $token));
+    }
+
+    /**
+     * Add a serie to the user favorites
+     *
+     * @link http://api.betaseries.com/shows/add/<url>.xml
+     * @param string $slug
+     * @return string
+     */
+    public function addFavorite($slug)
+    {
+        return $this->fetch('/shows/add/' . $slug, array('token' => $this->token));
+    }
+
+    /**
+     * Remove a serie from the user favorites
+     *
+     * @link http://api.betaseries.com/shows/remove/<url>.xml
+     * @param string $slug
+     * @return string
+     */
+    public function removeFavorite($slug)
+    {
+        return $this->fetch('/shows/remove/' . $slug, array('token' => $this->token));
+    }
+
+    /**
+     * Set an episode as watched
+     *
+     * @link http://api.betaseries.com/members/watched/<url>.xml?season=<N>&episode=<N><&note=N>
+     * @param string $slug
+     * @param int $season
+     * @param int $number
+     * @return string
+     */
+    public function watched($slug, $season, $number)
+    {
+        return $this->fetch('/members/watched/' . $slug, array('season' => $season, 'episode' => $number, 'token' => $this->token));
+    }
+
+    /**
+     * Get subtitles for a serie
+     *
+     * @link http://api.betaseries.com/subtitles/show/<url>.xml<?language=(VO|VF)><&season=N><&episode=N>
+     * @param string $slug
+     * @return string
+     */
+    public function showSubtitles($slug, $season = null, $episode = null)
+    {
+        return $this->fetch('/subtitles/show/' . $slug, array('season' => $season, 'episode' => $episode, 'language' => $this->language));
     }
 
     /**
