@@ -242,9 +242,26 @@ class Client
      * @param string $slug
      * @return string
      */
-    public function showSubtitles($slug, $season = null, $episode = null)
+    public function getSubtitles($slug, $season = null, $episode = null)
     {
         return $this->fetch('/subtitles/show/' . $slug, array('season' => $season, 'episode' => $episode, 'language' => $this->language));
+    }
+
+    /**
+     * Get the url of a picture for a serie or an episode
+     *
+     * @param string $slug
+     * @param int|null $season
+     * @param int|null $number
+     * @return string
+     */
+    public function getPictureUrl($slug, $season = null, $number = null)
+    {
+        if ($season == null || $number == null) {
+            return $this->baseUrl  . '/pictures/show/' . $slug . '.jpg';
+        }
+
+        return $this->baseUrl  . '/pictures/episode/'. $slug .'.jpg?season=' . $season . '&episode=' . $number;
     }
 
     /**
