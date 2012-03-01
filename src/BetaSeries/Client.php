@@ -258,10 +258,10 @@ class Client
     public function getPictureUrl($slug, $season = null, $number = null)
     {
         if ($season == null || $number == null) {
-            return $this->baseUrl  . '/pictures/show/' . $slug . '.jpg';
+            return $this->baseUrl  . '/pictures/show/' . $slug . '.jpg?key=' . $this->apiKey;
         }
 
-        return $this->baseUrl  . '/pictures/episode/'. $slug .'.jpg?season=' . $season . '&episode=' . $number;
+        return $this->baseUrl  . '/pictures/episode/'. $slug .'.jpg?season=' . $season . '&episode=' . $number . '&key=' . $this->apiKey;
     }
 
     /**
