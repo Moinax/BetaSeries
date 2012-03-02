@@ -71,6 +71,26 @@ class Client
     }
 
     /**
+     * Switch to another language
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * Return the new current language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
      * Get the status of the api
      *
      * @link http://api.betaseries.com/status.xml
