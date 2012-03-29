@@ -191,10 +191,7 @@ class Client
      */
     public function getToken($login, $password)
     {
-        $response = json_decode($this->fetch('/members/auth', array('login' => $login, 'password' => md5($password))), true);
-        $this->token = $response['root']['key'];
-
-        return $this->token;
+        return $this->fetch('/members/auth', array('login' => $login, 'password' => md5($password)));
     }
 
     /**
