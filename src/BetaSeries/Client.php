@@ -18,6 +18,7 @@ class Client
 
     const LANGUAGE_VO = 'VO';
     const LANGUAGE_VF = 'VF';
+    const LANGUAGE_ALL = 'ALL';
 
     /**
      * Base url for betaseries.com
@@ -260,11 +261,20 @@ class Client
      *
      * @link http://api.betaseries.com/subtitles/show/<url>.xml<?language=(VO|VF)><&season=N><&episode=N>
      * @param string $slug
+     * @param integer $season
+     * @param integer $episode
      * @return string
      */
     public function getSubtitles($slug, $season = null, $episode = null)
     {
-        return $this->fetch('/subtitles/show/' . $slug, array('season' => $season, 'episode' => $episode, 'language' => $this->language));
+        $parameters = array();
+        if ($season !== null && $episode !== null) {
+            $parameters = array('season' => $season, 'episode' => $episode);
+        }
+        if ($this->language !== self::LANGUAGE_ALL) {
+            $parameters['language'] = $this->language;
+        }
+        return $this->fetch('/subtitles/show/' . $slug, $parameters);
     }
 
     /**
