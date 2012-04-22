@@ -3,13 +3,17 @@ BetaSeries
 
 PHP client used to connect to the BetaSeries api.
 
-Current implemented methods
----------------------------
+What does it do:
+----------------
 
-* searchShows(title) : search a show by title and return his url (slug)
-* showSubtitles(url, season, episode) : search subtitles by show url and filter by season, episode
+The Client implements almost all api functions from betaseries api
 
-Status
-------
+Examples:
+---------
 
-Still in early development
+Check the examples to test the Api
+Rename the settings.php.dist in settings.php if you wan to test and enter your own API key provided by https://www.betaseries.com/dev/wiki/
+
+Status:
+-------
+This version is quite stable and used in production on http://nextepisode.tv
