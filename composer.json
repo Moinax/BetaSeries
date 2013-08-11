@@ -1,0 +1,20 @@
+{
+    "name": "moinax/betaseries",
+    "description": "PHP client used to connect to the BetaSeries api.",
+    "keywords": ["API"],
+    "homepage": "http://moinax.github.io/BetaSeries/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moinax",
+            "email": "moinax@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": { "Moinax\\Miso": "src" }
+    }
+}
