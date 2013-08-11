@@ -299,8 +299,10 @@ class Client
      *
      * @access protected
      * @param $url string The url to fetch data from
+     * @param array $params
+     * @param string $method
      * @return string The data
-     **/
+     */
     protected function fetch($url, $params = array(), $method = Client::GET)
     {
         $params = array_merge($params, array('key' => $this->apiKey));
