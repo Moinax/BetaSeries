@@ -1,6 +1,6 @@
 <?php
 
-namespace BetaSeries;
+namespace Moinax\BetaSeries;
 
 /**
  * Base BetaSeries library class, provides universal functions and variables
